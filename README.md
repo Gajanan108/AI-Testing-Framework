@@ -5,6 +5,9 @@ Automated PII detection pipelines, processing 10GB+ sensitive data with 99% accu
 
 Hybrid Framework for Testing LLMs and ML Models
 
+![image](https://github.com/user-attachments/assets/d474aaa5-0ccd-4013-acfe-7fea73272397)
+
+
 Introduction
 
 In the evolving financial technology landscape, machine learning (ML) and large language models (LLMs) are transforming banking services. However, these innovations bring unique challenges in security, privacy, and compliance that require robust testing frameworks.
@@ -123,3 +126,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 
 For further inquiries or collaborations, feel free to reach out.
+
+![image](https://github.com/user-attachments/assets/2d82e127-99f8-4d03-8f24-44b9538b83f0)
+
