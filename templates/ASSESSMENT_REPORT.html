@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Security Assessment Report</title>
+<style>
+:root{--ink:#172235;--muted:#5b687b;--line:#dce3ec;--paper:#ffffff;--wash:#f4f7fb;--accent:#234d78;--soft:#eaf1f8}
+*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink);font:15px/1.6 Inter,Segoe UI,Arial,sans-serif}
+.page{max-width:1050px;margin:32px auto;padding:0 22px}.hero{background:linear-gradient(135deg,#14283e,#2d5479);color:#fff;padding:34px 38px;border-radius:14px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700;opacity:.8}.hero h1{font-size:30px;line-height:1.2;margin:10px 0}.hero p{color:#e3edf6;margin:8px 0 0}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.meta div{border:1px solid #ffffff45;border-radius:8px;padding:10px 12px}.meta small{display:block;color:#d3e0ed}.meta strong{font-size:14px}.section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 26px;margin:18px 0}.section h2{font-size:19px;margin:0 0 14px;color:var(--accent)}.section h3{font-size:15px;margin:18px 0 8px}.muted{color:var(--muted)}.callout{border-left:4px solid #9aaec2;background:var(--soft);padding:12px 15px;border-radius:4px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:9px;padding:13px}.metric b{font-size:24px;display:block}.metric span{font-size:12px;color:var(--muted)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f1f5f9;color:#34465c}code{background:#f0f3f7;padding:2px 5px;border-radius:4px}.placeholder{color:#68778b;font-style:italic}.footer{font-size:12px;color:var(--muted);text-align:center;padding:18px}
+@media(max-width:700px){.meta,.grid{grid-template-columns:repeat(2,1fr)}.hero{padding:26px 22px}.section{padding:19px}.page{padding:0 12px}}
+@media print{body{background:#fff}.page{max-width:none;margin:0;padding:0}.hero,.section{break-inside:avoid}.section{box-shadow:none}.footer{padding-bottom:0}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">AI Security Testing Framework · Assessment Report</div>
+<h1>AI Security Assessment Report</h1>
+<p>Assessment of <strong>[System / Model Name]</strong></p>
+<div class="meta">
+<div><small>Assessment ID</small><strong>[ASSESSMENT-ID]</strong></div>
+<div><small>Report date</small><strong>[YYYY-MM-DD]</strong></div>
+<div><small>Assessment status</small><strong>[Draft / Final]</strong></div>
+</div>
+</header>
+<section class="section">
+<h2>1. Executive summary</h2>
+<p class="placeholder">[Summarise the assessed system, scope, principal outcomes, and decision-relevant risks. Do not treat unvalidated observations as confirmed vulnerabilities.]</p>
+<div class="callout"><strong>Overall assessment:</strong> <span class="placeholder">[Not rated / Low / Medium / High / Critical — include rationale and approval status]</span></div>
+</section>
+<section class="section">
+<h2>2. Assessment profile</h2>
+<table><tbody>
+<tr><th>System / application</th><td>[Name and purpose]</td><th>Owner</th><td>[Business / technical owner]</td></tr>
+<tr><th>Model / provider</th><td>[Name, architecture, version, revision/hash]</td><th>Environment</th><td>[Development / test / staging / production]</td></tr>
+<tr><th>Assessment window</th><td>[Start – end]</td><th>Assessment lead</th><td>[Name / team]</td></tr>
+<tr><th>Authorisation</th><td>[Approval reference]</td><th>Run identifier</th><td>[Run ID]</td></tr>
+</tbody></table>
+<h3>Scope and boundaries</h3><p class="placeholder">[In-scope components, interfaces, data flows, downstream consumers, and exclusions.]</p>
+<h3>Threat model</h3><p class="placeholder">[Attacker profiles, access assumptions, capabilities, trust boundaries, and safety constraints.]</p>
+</section>
+<section class="section">
+<h2>3. Results summary</h2>
+<div class="grid">
+<div class="metric"><b>[0]</b><span>Planned tests</span></div>
+<div class="metric"><b>[0]</b><span>Executed tests</span></div>
+<div class="metric"><b>[0]</b><span>Failed / blocked</span></div>
+<div class="metric"><b>[0]</b><span>Confirmed findings</span></div>
+</div>
+<h3>Execution status</h3>
+<table><thead><tr><th>Test / module</th><th>Target</th><th>Tool / version</th><th>Status</th><th>Evidence reference</th></tr></thead>
+<tbody><tr><td>[Test case]</td><td>[Component]</td><td>[Tool/version]</td><td>[Planned / N/A / Attempted / Executed / Failed / Blocked]</td><td>[EV-001]</td></tr></tbody></table>
+<p class="muted">A test is counted as executed only when the method ran and produced an output. Failed, blocked, and not-applicable tests are not successful test results.</p>
+</section>
+<section class="section">
+<h2>4. Findings register</h2>
+<table><thead><tr><th>ID / title</th><th>Status</th><th>Severity</th><th>Assurance area</th><th>OWASP / standards mapping</th><th>Owner</th></tr></thead>
+<tbody><tr><td>[F-001 — Finding title]</td><td>[Observation / Potential / Confirmed / False positive / Accepted / Remediated]</td><td>[Rating + rationale]</td><td>[Area]</td><td>[Mapping and version, or Not mapped]</td><td>[Owner]</td></tr></tbody></table>
+<h3>Finding detail</h3>
+<p><strong>Expected behaviour:</strong> <span class="placeholder">[Expected result]</span></p>
+<p><strong>Observed behaviour:</strong> <span class="placeholder">[Observed result and measured delta]</span></p>
+<p><strong>Impact validation:</strong> <span class="placeholder">[Demonstrated application impact, reproducibility, attacker prerequisites]</span></p>
+<p><strong>Recommendation:</strong> <span class="placeholder">[Specific mitigation and compensating controls]</span></p>
+</section>
+<section class="section">
+<h2>5. Risk rating</h2>
+<table><thead><tr><th>Finding</th><th>Likelihood (1–5)</th><th>Impact (1–5)</th><th>Inherent score</th><th>Residual score</th><th>Rationale / override</th></tr></thead>
+<tbody><tr><td>[F-001]</td><td>[1–5]</td><td>[1–5]</td><td>[L × I]</td><td>[After verified controls]</td><td>[Rationale]</td></tr></tbody></table>
+<p class="muted">Use the repository's Risk Rating Methodology or the organisation's mandated risk method. Do not assign a severity to an unvalidated observation.</p>
+</section>
+<section class="section">
+<h2>6. Limitations and exclusions</h2>
+<p class="placeholder">[Untested components, proxy objectives, sample-size constraints, unavailable interfaces, dependency issues, and other limitations.]</p>
+</section>
+<section class="section">
+<h2>7. Remediation and retest plan</h2>
+<table><thead><tr><th>Finding</th><th>Action</th><th>Owner</th><th>Target date</th><th>Retest status</th></tr></thead>
+<tbody><tr><td>[F-001]</td><td>[Remediation]</td><td>[Owner]</td><td>[Date]</td><td>[Pending / Passed / Failed]</td></tr></tbody></table>
+</section>
+<section class="section">
+<h2>8. Evidence and approvals</h2>
+<p class="placeholder">[List evidence IDs, secure storage references, hashes, execution logs, model revisions, and approval records. Do not embed secrets or personal data.]</p>
+<table><thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody><tr><td>Assessment lead</td><td>[Name]</td><td>[Reviewed]</td><td>[Date]</td></tr><tr><td>System owner</td><td>[Name]</td><td>[Accepted / Action required]</td><td>[Date]</td></tr><tr><td>Security / risk approver</td><td>[Name]</td><td>[Approved / Accepted risk]</td><td>[Date]</td></tr></tbody></table>
+</section>
+<div class="footer">AI Security Testing Framework · Internal assessment artefact · Handle according to the system's data classification</div>
+</main>
+</body>
+</html>
