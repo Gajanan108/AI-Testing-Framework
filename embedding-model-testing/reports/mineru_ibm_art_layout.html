@@ -1,0 +1,116 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MinerU PP-DocLayoutV2 IBM ART Report</title><style>body{font:14px/1.5 Arial;margin:0;color:#172033}header{background:#172b4d;color:white;padding:24px}main{max-width:1300px;margin:24px auto;padding:0 18px}.note{background:#eef6ff;border-left:4px solid #2766a8;padding:14px;margin:18px 0}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #d7dee8;padding:8px;vertical-align:top;overflow-wrap:anywhere}th{background:#eaf0f7}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f8fb;padding:12px}</style></head><body><header><h1>MinerU PP-DocLayoutV2 — IBM ART Image Attack Report</h1><div>Actual local safetensors model · PyTorch forward pass · ART attacks</div><small>2026-10-28T00:48:00.743972+00:00</small></header><main><div class="note"><b>Scope:</b> ART attacks run against the actual MinerU PP-DocLayoutV2 layout detector. The ART adapter maps its object-query logits to per-class presence scores using max over queries. This makes classifier attacks usable, but evaluates layout-class presence—not the full detection box geometry or final Markdown output. OCR and VLM are separate components.</div><h2>Run summary</h2><pre>{
+  &quot;utc&quot;: &quot;2026-10-28T00:48:00.743972+00:00&quot;,
+  &quot;model&quot;: &quot;MinerU PP-DocLayoutV2 (actual model.safetensors)&quot;,
+  &quot;model_path&quot;: &quot;/root/.mineru/models/MinerU-4_models_torch/Layout/PP-DocLayoutV2&quot;,
+  &quot;model_loaded&quot;: true,
+  &quot;forward_pass&quot;: true,
+  &quot;device&quot;: &quot;cuda&quot;,
+  &quot;attack_count&quot;: 9,
+  &quot;executed&quot;: 6,
+  &quot;failed&quot;: 3,
+  &quot;class_proxy&quot;: &quot;max object-query logits per layout class; not full document parse&quot;,
+  &quot;baseline_class_index&quot;: 12,
+  &quot;limitations&quot;: &quot;These attacks target the actual PP-DocLayoutV2 layout detector through an ART classifier adapter. They do not directly attack the separate OCR safetensors, GGUF VLM, or end-to-end MinerU Markdown pipeline.&quot;
+}</pre><h2>Attack results</h2><table><thead><tr><th>attack</th><th>status</th><th>baseline_class</th><th>adversarial_class</th><th>changed_top_class</th><th>linf</th><th>duration_s</th><th>interpretation</th><th>error</th></tr></thead><tbody><tr><td>FastGradientMethod</td><td>EXECUTED</td><td>12</td><td>16</td><td>True</td><td>0.0313725471496582</td><td>0.64</td><td>Potential layout-class change</td><td></td></tr><tr><td>ProjectedGradientDescent</td><td>EXECUTED</td><td>12</td><td>16</td><td>True</td><td>0.0313725471496582</td><td>1.45</td><td>Potential layout-class change</td><td></td></tr><tr><td>BasicIterativeMethod</td><td>EXECUTED</td><td>12</td><td>16</td><td>True</td><td>0.0313725471496582</td><td>1.4</td><td>Potential layout-class change</td><td></td></tr><tr><td>SquareAttack</td><td>EXECUTED</td><td>12</td><td>12</td><td>False</td><td>0.0313725471496582</td><td>6.0</td><td>No top-class change in this run</td><td></td></tr><tr><td>ZooAttack</td><td>EXECUTED</td><td>12</td><td>12</td><td>False</td><td>0.0</td><td>3.55</td><td>No top-class change in this run</td><td></td></tr><tr><td>NewtonFool</td><td>EXECUTED</td><td>12</td><td>6</td><td>True</td><td>1.0</td><td>1.78</td><td>Potential layout-class change</td><td></td></tr><tr><td>SpatialTransformation</td><td>FAILED</td><td>12</td><td></td><td></td><td></td><td>0.0</td><td></td><td>TypeError(&quot;SpatialTransformation.__init__() got an unexpected keyword argument &#x27;estimator&#x27;&quot;)</td></tr><tr><td>PixelAttack</td><td>FAILED</td><td>12</td><td></td><td></td><td></td><td>0.0</td><td></td><td>TypeError(&quot;PixelAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;&quot;)</td></tr><tr><td>ThresholdAttack</td><td>FAILED</td><td>12</td><td></td><td></td><td></td><td>0.0</td><td></td><td>TypeError(&quot;ThresholdAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;&quot;)</td></tr></tbody></table><h2>Environment / evidence</h2><pre>Model: /root/.mineru/models/MinerU-4_models_torch/Layout/PP-DocLayoutV2
+SHA-256: e60f3725aeedc88fd319416ef166bda79171a41516a301c27cab9132dc2739d2
+Input image: /content/mineru_ibm_art_layout_attacks/inputs/layout_test_document.png
+Input SHA-256: 0dad64868e9932b1a8b13e98691975ab800500e9177e6e6ef6b359c26448e186
+Device: cuda
+Raw baseline logits: [[-5.766776084899902, -6.7010064125061035, -5.335491180419922, -6.044495105743408, -6.272060871124268, -6.2971954345703125, -4.218184947967529, -4.111467361450195, -4.248526573181152, -5.471792221069336, -6.516290187835693, -5.7725372314453125, -4.061821937561035, -5.016607761383057, -4.371626853942871, -5.277796745300293, -4.64370584487915, -4.186874866485596, -7.243596076965332, -6.780517578125, -6.787365436553955, -4.925848007202148, -4.844467639923096, -5.231441974639893, -5.1090407371521]]</pre><h2>Full results JSON</h2><pre>[
+  {
+    &quot;attack&quot;: &quot;FastGradientMethod&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 16,
+    &quot;changed_top_class&quot;: true,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -3.7538259029388428,
+    &quot;linf&quot;: 0.0313725471496582,
+    &quot;duration_s&quot;: 0.64,
+    &quot;interpretation&quot;: &quot;Potential layout-class change&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;ProjectedGradientDescent&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 16,
+    &quot;changed_top_class&quot;: true,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -3.655787467956543,
+    &quot;linf&quot;: 0.0313725471496582,
+    &quot;duration_s&quot;: 1.45,
+    &quot;interpretation&quot;: &quot;Potential layout-class change&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;BasicIterativeMethod&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 16,
+    &quot;changed_top_class&quot;: true,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -3.6559786796569824,
+    &quot;linf&quot;: 0.0313725471496582,
+    &quot;duration_s&quot;: 1.4,
+    &quot;interpretation&quot;: &quot;Potential layout-class change&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;SquareAttack&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 12,
+    &quot;changed_top_class&quot;: false,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -4.062244415283203,
+    &quot;linf&quot;: 0.0313725471496582,
+    &quot;duration_s&quot;: 6.0,
+    &quot;interpretation&quot;: &quot;No top-class change in this run&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;ZooAttack&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 12,
+    &quot;changed_top_class&quot;: false,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -4.061821937561035,
+    &quot;linf&quot;: 0.0,
+    &quot;duration_s&quot;: 3.55,
+    &quot;interpretation&quot;: &quot;No top-class change in this run&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;NewtonFool&quot;,
+    &quot;status&quot;: &quot;EXECUTED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;adversarial_class&quot;: 6,
+    &quot;changed_top_class&quot;: true,
+    &quot;baseline_score&quot;: -4.061821937561035,
+    &quot;adversarial_score&quot;: -3.2126259803771973,
+    &quot;linf&quot;: 1.0,
+    &quot;duration_s&quot;: 1.78,
+    &quot;interpretation&quot;: &quot;Potential layout-class change&quot;
+  },
+  {
+    &quot;attack&quot;: &quot;SpatialTransformation&quot;,
+    &quot;status&quot;: &quot;FAILED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;error&quot;: &quot;TypeError(\&quot;SpatialTransformation.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\&quot;)&quot;,
+    &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 111, in &lt;cell line: 0&gt;\n    atk=make()\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 103, in &lt;lambda&gt;\n    (\&quot;SpatialTransformation\&quot;,lambda:SpatialTransformation(estimator=classifier, max_translation=2, num_translations=3, max_rotation=5, num_rotations=3)),\n                                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: SpatialTransformation.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\n&quot;,
+    &quot;duration_s&quot;: 0.0
+  },
+  {
+    &quot;attack&quot;: &quot;PixelAttack&quot;,
+    &quot;status&quot;: &quot;FAILED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;error&quot;: &quot;TypeError(\&quot;PixelAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\&quot;)&quot;,
+    &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 111, in &lt;cell line: 0&gt;\n    atk=make()\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 104, in &lt;lambda&gt;\n    (\&quot;PixelAttack\&quot;,lambda:PixelAttack(estimator=classifier,max_iter=10,th=10)),\n                          ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: PixelAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\n&quot;,
+    &quot;duration_s&quot;: 0.0
+  },
+  {
+    &quot;attack&quot;: &quot;ThresholdAttack&quot;,
+    &quot;status&quot;: &quot;FAILED&quot;,
+    &quot;baseline_class&quot;: 12,
+    &quot;error&quot;: &quot;TypeError(\&quot;ThresholdAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\&quot;)&quot;,
+    &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 111, in &lt;cell line: 0&gt;\n    atk=make()\n  File \&quot;/tmp/ipykernel_811/92243558.py\&quot;, line 105, in &lt;lambda&gt;\n    (\&quot;ThresholdAttack\&quot;,lambda:ThresholdAttack(estimator=classifier,threshold=0.1)),\n                              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: ThresholdAttack.__init__() got an unexpected keyword argument &#x27;estimator&#x27;\n&quot;,
+    &quot;duration_s&quot;: 0.0
+  }
+]</pre></main></body></html>
