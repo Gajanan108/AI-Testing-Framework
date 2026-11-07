@@ -1,0 +1,4 @@
+adversarial-robustness-toolbox
+transformers
+torch
+numpy
