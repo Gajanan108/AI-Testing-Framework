@@ -44,7 +44,7 @@ Tool names are examples of possible implementation choices, not a claim that eve
 8. User acceptance and ethical review
 9. Continuous monitoring and improvement
 
-See [Framework overview](docs/FRAMEWORK_OVERVIEW.md), [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md), and the [assessment flow diagram](docs/ASSESSMENT_FLOW.md).
+See [Framework overview](docs/FRAMEWORK_OVERVIEW.md), [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md), the [assessment flow diagram](docs/ASSESSMENT_FLOW.md), and the [assurance-to-testing coverage matrix](docs/CONTROL_COVERAGE_MATRIX.md).
 
 ## Continuous defensive assurance lifecycle
 
@@ -86,12 +86,12 @@ Both workstreams document attack applicability, execution status, and limitation
 | Confirmed finding | Reproducible evidence demonstrates security-relevant impact in the stated threat model |
 | False positive | The suspected issue was investigated and evidence does not support the finding |
 
-A model score change, class flip, prompt response, or metric deviation is not automatically a vulnerability. A finding should include reproducible evidence, the affected system boundary, attacker prerequisites, impact, severity rationale, and remediation guidance. See [Finding taxonomy](docs/FINDING_TAXONOMY.md), the [finding report template](templates/FINDING_REPORT.md), and the [test case template](templates/TEST_CASE.md).
+A model score change, class flip, prompt response, or metric deviation is not automatically a vulnerability. A finding should include reproducible evidence, the affected system boundary, attacker prerequisites, impact, severity rationale, and remediation guidance. See [Finding taxonomy](docs/FINDING_TAXONOMY.md), the [risk rating methodology](docs/RISK_RATING_METHODOLOGY.md), the [HTML assessment report template](templates/ASSESSMENT_REPORT.html), the [finding report template](templates/FINDING_REPORT.md), and the [test case template](templates/TEST_CASE.md).
 
 ## Repository structure
 
-- **docs/** — framework overview, assessment methodology, and finding taxonomy.
-- **templates/** — reusable assessment-plan and finding-report templates.
+- **docs/** — framework overview, assessment methodology, coverage matrix, risk rating methodology, and finding taxonomy.
+- **templates/** — reusable assessment-plan, test-case, finding-report, and HTML assessment-report templates.
 - **embedding-model-testing/** — existing IBM ART workstream, attack matrix, notebooks, reports, and dependencies.
 - **embedding-model-testing/reranker-minilm/** — separate MiniLM reranker experiment.
 
