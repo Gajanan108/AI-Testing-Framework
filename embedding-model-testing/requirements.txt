@@ -1,5 +1,5 @@
 # Current MinerU Colab notebook dependencies
-adversarial-robustness-toolbox
+adversarial-robustness-toolbox==1.20.1
 mineru[torch]>=4.0,<5
 transformers
 torch
