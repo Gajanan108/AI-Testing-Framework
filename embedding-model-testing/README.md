@@ -39,7 +39,7 @@ ART attacks do not automatically understand an arbitrary embedding vector. An AR
 4. It loads the actual PP-DocLayoutV2 model, performs a forward-pass smoke test, wraps its output with ART's `PyTorchClassifier`, and attempts the configured ART attacks.
 5. The notebook writes an HTML report and a plain-text execution log under `/content/mineru_ibm_art_layout_attacks/artifacts/` and downloads both.
 
-**Important:** this uploaded notebook has known API compatibility failures for three configured attacks (SpatialTransformation, PixelAttack, ThresholdAttack) because the supplied constructors pass an unsupported `estimator` keyword in the recorded environment. Those rows are reported as failed, not silently substituted. Pin and validate the installed ART version, then adapt each constructor to that version's official signature before counting it as executed. Do not claim an attack ran merely because it was listed.
+**Historical run note:** the previously uploaded report records three constructor failures (SpatialTransformation, PixelAttack, ThresholdAttack) because that earlier notebook revision used incorrect constructor keywords. The current notebook pins ART 1.20.1 and corrects these to the official `classifier` argument; ThresholdAttack uses `th`. This is source-reviewed but not yet Colab-executed. The old report remains evidence for the old notebook revision only.
 
 ## Current sample experiment
 
