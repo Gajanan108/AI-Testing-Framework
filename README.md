@@ -23,14 +23,14 @@ The framework uses two complementary views: **seven assurance areas** describe t
 | # | Assurance area | Assessment objective | Example tooling / references |
 |---|---|---|---|
 | 1 | Data privacy and governance | Assess sensitive-data handling, privacy controls, data governance, and compliance obligations. | Microsoft Presidio; NIST AI RMF; applicable privacy and sector requirements |
-| 2 | Bias and fairness | Identify disparate outcomes, data imbalance, and unfair model behaviour. | AI Fairness 360; TextAttack; OECD AI Principles |
-| 3 | Adversarial robustness | Evaluate resistance to malicious or unexpected inputs and model manipulation. | IBM Adversarial Robustness Toolbox (ART); Garak; OWASP guidance |
+| 2 | Bias and fairness | Identify disparate outcomes, data imbalance, and unfair model behaviour. | AI Fairness 360; OECD AI Principles |
+| 3 | Adversarial robustness | Evaluate resistance to malicious or unexpected inputs and model manipulation. | IBM Adversarial Robustness Toolbox (ART); TextAttack; Garak; OWASP guidance |
 | 4 | Explainability and interpretability | Assess whether model behaviour and decisions can be understood and investigated. | LIME; InterpretML; NIST AI RMF |
 | 5 | Performance and scalability | Measure latency, throughput, resource consumption, and behaviour under load. | Apache JMeter; Locust |
 | 6 | Operational monitoring and drift | Detect changes in input data, model behaviour, and operational performance. | Evidently AI; Giskard |
 | 7 | Incident response and security monitoring | Support detection, triage, investigation, and response to AI-related security events. | SIEM platforms such as Splunk and Elastic/Kibana; NIST Cybersecurity Framework |
 
-Tool names are examples of possible implementation choices, not a claim that every tool is integrated or suitable for every model. Select tools according to the model boundary, threat model, available interfaces, and evidence requirements.
+Tool names are examples of possible implementation choices, not a claim that every tool is integrated or suitable for every model. Select tools according to the model boundary, threat model, available interfaces, and evidence requirements. See the companion [AI Testing Tool Samples repository](https://github.com/Gajanan108/AI-Testing-Tool-Samples) for tool capabilities, configuration methods, and illustrative reports.
 
 ### Nine modular testing activities
 
@@ -59,6 +59,10 @@ See [Framework overview](docs/FRAMEWORK_OVERVIEW.md), [Assessment methodology](d
 | Monitoring and continuous assurance | Drift, incidents, regressions, feedback, model or data changes | Monitoring results, incident records, periodic reassessments |
 
 Apply the framework proportionately to system impact, exposure, autonomy, data sensitivity, and credible attacker capabilities.
+
+## Companion tool reference repository
+
+The [AI Testing Tool Samples](https://github.com/Gajanan108/AI-Testing-Tool-Samples) repository documents the methods, configuration points, example test cases, limitations, and illustrative reports for 12 selected tools across privacy, fairness, robustness, LLM security, explainability, performance, monitoring, and incident response. These examples describe achievable assessment coverage; they are not claims of execution or integration into a single automated platform.
 
 ## Technical experiments and artefacts
 
