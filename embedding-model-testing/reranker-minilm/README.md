@@ -12,16 +12,17 @@ A reranker is normally a cross-encoder. It takes a query and a candidate passage
 
 ## Notebook
 
-Open `notebooks/minilm_reranker_ibm_art_attacks.ipynb` in Google Colab. It downloads the model from Hugging Face, runs a real baseline inference, builds an ART `PyTorchClassifier` adapter for pairwise ranking, smoke-tests the adapter, and attempts official ART attacks:
+Open `notebooks/minilm_reranker_ibm_art_attacks.ipynb` in Google Colab. It downloads the model from Hugging Face, runs a real baseline inference, builds an ART `PyTorchClassifier` adapter for pairwise ranking, smoke-tests the adapter, and attempts official ART attacks using pinned ART 1.20.1:
 
 - FastGradientMethod
 - ProjectedGradientDescent
 - BasicIterativeMethod
 - NewtonFool
-- SquareAttack
 - ZooAttack
 
 The wrapper defines a pairwise ranking decision: class 0 means the relevant candidate outranks a fixed competitor; class 1 means the ordering is inverted. ART attacks operate on the continuous word-embedding tensor for the candidate pair, not token IDs. The notebook records each attack as EXECUTED or FAILED and generates exactly two downloadable artifacts: an HTML report and a log file.
+
+The notebook intentionally excludes SquareAttack because its official implementation assumes spatial/image-shaped input. The remaining selected attacks operate on the pairwise classifier proxy over continuous input embeddings.
 
 ## Critical threat-model limitation
 
@@ -41,7 +42,11 @@ Image-only attacks such as PixelAttack, SpatialTransformation, and image patches
 
 ## Dependencies
 
-See `requirements.txt`. The notebook installs ART and Transformers dependencies in Colab.
+See `requirements.txt`. ART is pinned to 1.20.1; other framework/model dependencies are resolved in Colab and recorded in the run log.
+
+## Current validation status
+
+The notebook is committed with the ART version pin and attack applicability correction, but it has **not yet been executed in Colab**. Do not describe it as a successful run until its HTML report and log are generated from an actual execution.
 
 ## References
 
