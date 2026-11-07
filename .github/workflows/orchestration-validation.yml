@@ -1,0 +1,70 @@
+name: Orchestration validation
+
+on:
+  push:
+    paths:
+      - "orchestration/**"
+      - "embedding-model-testing/**/*.ipynb"
+      - ".github/workflows/orchestration-validation.yml"
+  pull_request:
+    paths:
+      - "orchestration/**"
+      - "embedding-model-testing/**/*.ipynb"
+      - ".github/workflows/orchestration-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile orchestration module
+        run: python -m py_compile orchestration/build_assessment_plan.py
+
+      - name: Validate JSON documents
+        run: |
+          python -m json.tool orchestration/tool_registry.json > /dev/null
+          python -m json.tool orchestration/assessment_manifest.schema.json > /dev/null
+          python -m json.tool orchestration/examples/mineru_assessment.example.json > /dev/null
+
+      - name: Validate notebook JSON structure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          paths = [
+              Path("embedding-model-testing/notebooks/mineru_ibm_art_layout_model_attacks.ipynb"),
+              Path("embedding-model-testing/reranker-minilm/notebooks/minilm_reranker_ibm_art_attacks.ipynb"),
+          ]
+          for path in paths:
+              notebook = json.loads(path.read_text(encoding="utf-8"))
+              assert notebook.get("nbformat") == 4, path
+              assert notebook.get("cells"), path
+              print(f"Notebook JSON valid: {path}")
+          PY
+
+      - name: Run planner unit tests
+        run: python -m unittest discover -s orchestration/tests -v
+
+      - name: Build a plan without executing tools
+        run: |
+          python orchestration/build_assessment_plan.py \
+            --manifest orchestration/examples/mineru_assessment.example.json \
+            --output-dir /tmp/assessment-plan
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          plan = json.loads(Path("/tmp/assessment-plan/assessment_plan.json").read_text())
+          assert plan["planning_only"] is True
+          assert all(item["finding_status"] == "NONE" for item in plan["tools"])
+          print("Plan generation valid; no assessment tools were executed.")
+          PY
