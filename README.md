@@ -1,140 +1,124 @@
-AI Testing Framework
+# AI Security Testing Framework
 
+A modular framework for assessing the **security, robustness, privacy, fairness, reliability, and operational behaviour of machine-learning (ML) and large-language-model (LLM) systems**.
 
-Designed and implemented a comprehensive framework for testing ML/LLM models across adversarial robustness, explainability, and drift detection.
-Integrated  tools like LIME, Evidently AI, and Garak, ensuring 95% drift detection precision and optimized model performance.
-Automated PII detection pipelines, processing 10GB+ sensitive data with 99% accuracy for secure AI workflows.
+The framework combines a lifecycle-based assurance model, reusable assessment modules, and model-specific technical experiments. It is intended to help security, engineering, data-science, and governance teams identify risks, execute proportionate tests, and retain evidence for remediation and release decisions.
 
-Hybrid Framework for Testing LLMs and ML Models
+> **Project scope:** This repository contains framework guidance and selected model-specific experiments. It is not yet a single automated platform implementing every assessment area. Capabilities are described according to their actual implementation and validation status.
 
-![image](https://github.com/user-attachments/assets/d474aaa5-0ccd-4013-acfe-7fea73272397)
+## At a glance
 
+- **Assessment coverage:** seven high-level assurance areas and nine modular testing activities.
+- **Lifecycle coverage:** planning and design through development, validation, deployment, and continuous monitoring.
+- **Model coverage:** conventional ML, embedding and retrieval components, document/vision models, LLM applications, and agentic workflows where suitable methods exist.
+- **Evidence-led results:** distinguish planned, attempted, executed, failed, observed, potential, and confirmed outcomes.
+- **Technical workstreams:** IBM Adversarial Robustness Toolbox (ART) experiments for a document-layout model and a MiniLM cross-encoder reranker.
 
-Introduction
+## Framework at a glance
 
-In the evolving financial technology landscape, machine learning (ML) and large language models (LLMs) are transforming banking services. However, these innovations bring unique challenges in security, privacy, and compliance that require robust testing frameworks.
+The framework uses two complementary views: **seven assurance areas** describe the outcomes to assess; **nine testing modules** describe the activities used to gather evidence. The lifecycle model determines when assurance activities should take place.
 
-The Hybrid Framework for Testing LLMs and ML Models is designed to fortify the security, reliability, and ethical integrity of AIdriven systems. It supports:
-1. Data Protection and Compliance: Safeguarding customer data while adhering to regulations.
-2. Resilience Against Threats: Ensuring robustness against adversarial and other malicious attacks.
+### Seven assurance areas
 
-This repository outlines the framework's structure and key principles, without disclosing detailed Standard Operating Procedures (SOPs) to maintain proprietary integrity.
+| # | Assurance area | Assessment objective | Example tooling / references |
+|---|---|---|---|
+| 1 | Data privacy and governance | Assess sensitive-data handling, privacy controls, data governance, and compliance obligations. | Microsoft Presidio; NIST AI RMF; applicable privacy and sector requirements |
+| 2 | Bias and fairness | Identify disparate outcomes, data imbalance, and unfair model behaviour. | AI Fairness 360; TextAttack; OECD AI Principles |
+| 3 | Adversarial robustness | Evaluate resistance to malicious or unexpected inputs and model manipulation. | IBM Adversarial Robustness Toolbox (ART); Garak; OWASP guidance |
+| 4 | Explainability and interpretability | Assess whether model behaviour and decisions can be understood and investigated. | LIME; InterpretML; NIST AI RMF |
+| 5 | Performance and scalability | Measure latency, throughput, resource consumption, and behaviour under load. | Apache JMeter; Locust |
+| 6 | Operational monitoring and drift | Detect changes in input data, model behaviour, and operational performance. | Evidently AI; Giskard |
+| 7 | Incident response and security monitoring | Support detection, triage, investigation, and response to AI-related security events. | SIEM platforms such as Splunk and Elastic/Kibana; NIST Cybersecurity Framework |
 
+Tool names are examples of possible implementation choices, not a claim that every tool is integrated or suitable for every model. Select tools according to the model boundary, threat model, available interfaces, and evidence requirements.
 
-Framework Overview
+### Nine modular testing activities
 
-The framework is divided into seven key checks that provide a comprehensive testing approach for both LLMs and ML models:
+1. Data and input validation
+2. Model functionality testing
+3. Bias and fairness testing
+4. Explainability and transparency
+5. Robustness and adversarial testing
+6. Performance and efficiency testing
+7. Integration and system testing
+8. User acceptance and ethical review
+9. Continuous monitoring and improvement
 
-1. Data Privacy and Governance
- Ensures compliance with GDPR, SOX, and CCPA.
- Mitigates ethical risks such as discrimination and privacy violations.
+See [Framework overview](docs/FRAMEWORK_OVERVIEW.md) and [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md).
 
-Tools:  
-LLMs: Presidio  
-ML Models: Presidio  
+## Continuous defensive assurance lifecycle
 
-References:  
-NIST AI Framework, GDPR Standards, OWASP MLSVS  
+| Lifecycle phase | Primary focus | Typical evidence |
+|---|---|---|
+| Planning and design | Intended use, system boundaries, risk classification, threat modelling, privacy and security requirements | System description, data-flow diagram, threat model, assessment plan |
+| Data collection and preparation | Data quality, provenance, sensitive data, representativeness, permissions | Dataset inventory, data-quality checks, privacy review |
+| Model development and training | Model behaviour, robustness, fairness, explainability, training-data risks | Experiment records, evaluation results, model/version identifiers |
+| Validation and verification | Functional, security, adversarial, fairness, and performance testing | Test results, reproducible findings, acceptance criteria |
+| Operational readiness | Deployment controls, access, logging, monitoring, incident response, rollback | Readiness checklist, runbooks, alert tests |
+| Deployment | Secure configuration, integrations, release controls, production verification | Release record, configuration evidence, smoke tests |
+| Monitoring and continuous assurance | Drift, incidents, regressions, feedback, model or data changes | Monitoring results, incident records, periodic reassessments |
 
+Apply the framework proportionately to system impact, exposure, autonomy, data sensitivity, and credible attacker capabilities.
 
+## Technical experiments and artefacts
 
-2. Bias and Fairness Testing
- Identifies and mitigates training data biases.
- Promotes equitable and ethical AI behavior.
+### Embedding and document-model testing — IBM ART
 
-Tools:  
-LLMs: TextAttack  
-ML Models: AI Fairness 360  
+The [embedding-model-testing workstream](embedding-model-testing/README.md) contains a MinerU PP-DocLayoutV2 experiment, attack applicability guidance, and an HTML report. The current experiment uses an ART classifier adapter over layout-class presence scores. It does **not** establish robustness of OCR, bounding-box geometry, the separate VLM, or the end-to-end document pipeline.
 
-References:  
-OECD AI Principles, OWASP Top 10 for ML  
+### MiniLM cross-encoder reranker — IBM ART
 
+The [MiniLM reranker workstream](embedding-model-testing/reranker-minilm/README.md) evaluates cross-encoder/ms-marco-MiniLM-L6-v2 using a pairwise ranking proxy and selected official ART attacks. Its attack surface is continuous internal word-embedding space; this is not equivalent to an attacker changing natural-language text at an application endpoint.
 
+Both workstreams document attack applicability, execution status, and limitations. The reranker notebook and report template are committed, but the experiment has not yet been executed in Colab. A notebook or sample template is not completed test evidence.
 
-3. Adversarial Robustness
- Tests resistance to adversarial inputs targeting vulnerabilities.
- Essential for applications like fraud detection and risk assessment.
+## Results and finding quality
 
-Tools:  
-LLMs: Garak  
-ML Models: Adversarial Robustness Toolkit (ART)  
+| State | Meaning |
+|---|---|
+| Planned | Included in the assessment scope but not run |
+| Not applicable | The model or interface does not satisfy the test prerequisites |
+| Attempted | Execution was initiated |
+| Executed | The test method ran and produced an output |
+| Failed | Execution failed; no successful test result is claimed |
+| Observed behaviour | A measurable change or unexpected response was recorded |
+| Potential finding | An observation may have security relevance but needs validation |
+| Confirmed finding | Reproducible evidence demonstrates security-relevant impact in the stated threat model |
+| False positive | The suspected issue was investigated and evidence does not support the finding |
 
-References:  
-Microsoft AI Security, OWASP Top 10 for ML  
+A model score change, class flip, prompt response, or metric deviation is not automatically a vulnerability. A finding should include reproducible evidence, the affected system boundary, attacker prerequisites, impact, severity rationale, and remediation guidance. See [Finding taxonomy](docs/FINDING_TAXONOMY.md) and the [finding report template](templates/FINDING_REPORT.md).
 
+## Repository structure
 
+- **docs/** — framework overview, assessment methodology, and finding taxonomy.
+- **templates/** — reusable assessment-plan and finding-report templates.
+- **embedding-model-testing/** — existing IBM ART workstream, attack matrix, notebooks, reports, and dependencies.
+- **embedding-model-testing/reranker-minilm/** — separate MiniLM reranker experiment.
 
-4. Explainability and Interpretability
- Ensures transparency in decisionmaking.
- Builds trust by offering insights into model predictions.
+Existing notebooks, reports, and workstream documentation are retained.
 
-Tools:  
-LLMs: LIME for NLP  
-ML Models: InterpretML  
+## Getting started
 
-References:  
-NIST AI Explainability Principles  
+1. Read the [Framework overview](docs/FRAMEWORK_OVERVIEW.md).
+2. Define the system boundary, intended use, data flows, deployment context, and threat model.
+3. Select proportionate assessment activities using the [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md).
+4. Record scope and acceptance criteria with the [Assessment plan template](templates/ASSESSMENT_PLAN.md).
+5. Execute only tests compatible with the model and interface. Record failures and non-applicable tests explicitly.
+6. Document observations using the [Finding report template](templates/FINDING_REPORT.md).
+7. Validate security impact before assigning confirmed status or severity.
 
+## Safety and responsible use
 
-5. Performance and Scalability Testing
- Evaluates response under typical and increased workloads.
- Critical for maintaining performance and user satisfaction.
+Use the framework only against systems, models, datasets, and endpoints that you own or are explicitly authorised to assess. Use synthetic or approved test data. Do not commit secrets, customer data, proprietary model weights, or confidential reports to a public repository. See [SECURITY.md](SECURITY.md).
 
-Tools:  
-LLMs: Apache JMeter  
-ML Models: Locust  
+## Project-reported metrics
 
-References:  
-Microsoft Impact AI Framework  
+Earlier project descriptions referenced **95% drift-detection precision** and **99% PII-detection accuracy across 10GB+ of data**. These figures are retained as project-reported claims, not independently verified benchmark results in this repository. Before using them as performance claims, publish the evaluation dataset description, ground-truth method, metric definitions, test conditions, and reproducible results.
 
+## Contributing
 
+Contributions that improve test coverage, model adapters, reproducibility, documentation, and evidence quality are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-6. Operational Monitoring and Drift Detection
- Tracks realtime behavior and identifies data/model drift.
- Supports continuous improvement through stakeholder feedback.
+## Licence
 
-Tools:  
-LLMs: Giskard AI  
-ML Models: Evidently AI  
-
-References:  
-NIST AI Framework, European Commission’s Trustworthy AI Guidelines  
-
-
-
-7. Incident Response and Security Monitoring
- Proactively addresses security incidents like prompt injections.
- Continuously monitors behavior to detect anomalies and threats.
-
-Tools:  
-LLMs: Kibana  
-ML Models: Splunk  
-
-References:  
-OWASP MLSVS, NIST Cybersecurity Framework  
-
-
-Why This Framework?
-This hybrid approach bridges the gap between conventional ML testing and the unique needs of LLMs. It is tailored for banking and financial services to uphold trust, compliance, and security standards.
-
-Contributing
-We welcome contributions to refine and expand the framework. Please review our [contribution guidelines](CONTRIBUTING.md) before submitting pull requests.
-
-
-
- License
-This project is licensed under the [MIT License](LICENSE).
-
-
-
-For further inquiries or collaborations, feel free to reach out.
-
-![image](https://github.com/user-attachments/assets/2d82e127-99f8-4d03-8f24-44b9538b83f0)
-
-
-
-## Embedding Model Security Testing with IBM ART
-
-A dedicated workstream for adversarial-robustness evaluation of embedding-producing and related vision models using the official IBM-originated Adversarial Robustness Toolbox (ART). Includes a Colab notebook, attack applicability matrix, and sample MinerU PP-DocLayoutV2 HTML report.
-
-See [embedding-model-testing/](embedding-model-testing/README.md).
+The repository has historically described the project as MIT-licensed. A licence file is not currently present at the repository root; add the actual licence text before treating the repository as formally licensed under MIT.
