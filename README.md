@@ -32,6 +32,14 @@ The framework uses two complementary views: **seven assurance areas** describe t
 
 Tool names are examples of possible implementation choices, not a claim that every tool is integrated or suitable for every model. Select tools according to the model boundary, threat model, available interfaces, and evidence requirements. See the companion [AI Testing Tool Samples repository](https://github.com/Gajanan108/AI-Testing-Tool-Samples) for tool capabilities, configuration methods, and illustrative reports.
 
+
+### Companion assessment resources
+
+The companion [AI Testing Tool Samples](https://github.com/Gajanan108/AI-Testing-Tool-Samples) repository now includes:
+- [Model applicability matrix](https://github.com/Gajanan108/AI-Testing-Tool-Samples/blob/main/docs/MODEL_APPLICABILITY_MATRIX.md) — tool selection by model/application archetype, including IBM ART applicability boundaries.
+- [Framework architecture](https://github.com/Gajanan108/AI-Testing-Tool-Samples/blob/main/docs/FRAMEWORK_ARCHITECTURE.md) — conceptual architecture and evidence lifecycle.
+- [Consolidated illustrative HTML report](https://github.com/Gajanan108/AI-Testing-Tool-Samples/blob/main/reports/CONSOLIDATED_ILLUSTRATIVE_ASSESSMENT.html) — fictional cross-workstream reporting example, not executed evidence.
+
 ### Nine modular testing activities
 
 1. Data and input validation
