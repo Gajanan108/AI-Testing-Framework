@@ -131,3 +131,10 @@ For further inquiries or collaborations, feel free to reach out.
 
 ![image](https://github.com/user-attachments/assets/2d82e127-99f8-4d03-8f24-44b9538b83f0)
 
+
+
+## Embedding Model Security Testing with IBM ART
+
+A dedicated workstream for adversarial-robustness evaluation of embedding-producing and related vision models using the official IBM-originated Adversarial Robustness Toolbox (ART). Includes a Colab notebook, attack applicability matrix, and sample MinerU PP-DocLayoutV2 HTML report.
+
+See [embedding-model-testing/](embedding-model-testing/README.md).
