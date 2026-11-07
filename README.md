@@ -87,6 +87,7 @@ Both workstreams document attack applicability, execution status, and limitation
 
 ### Reproducibility and orchestration
 
+- [Technical validation status](docs/TECHNICAL_VALIDATION_STATUS.md) — source review, CI scope, Colab execution state and remaining runtime evidence.
 - [IBM ART benchmark protocol](docs/BENCHMARK_AND_REPRODUCIBILITY_PROTOCOL.md) — environment pinning, provenance, benchmark design, metrics and acceptance gates for the existing MinerU and MiniLM experiments.
 - [Assessment planning/orchestration MVP](orchestration/README.md) — model-archetype planning, a tool registry and an opt-in synthetic Presidio runner. ART notebooks remain Colab-driven; other external tools are not represented as integrated adapters.
 
