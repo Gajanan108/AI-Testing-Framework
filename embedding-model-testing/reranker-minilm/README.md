@@ -2,9 +2,9 @@
 
 ## Selected model
 
-`cross-encoder/ms-marco-MiniLM-L-6-v2` (approximately 22.7 million parameters). It is a compact, commonly used MS MARCO passage reranker. The Sentence Transformers model comparison reports 74.30 NDCG@10 on TREC DL 2019 and 39.01 MRR@10 on MS MARCO Dev for this model; benchmark values depend on evaluation setup. See the [official Cross-Encoder model table](https://sbert.net/docs/cross_encoder/pretrained_models.html).
+`cross-encoder/ms-marco-MiniLM-L6-v2` (approximately 22.7 million parameters). It is a compact, commonly used MS MARCO passage reranker. The Sentence Transformers model comparison reports 74.30 NDCG@10 on TREC DL 2019 and 39.01 MRR@10 on MS MARCO Dev for this model; benchmark values depend on evaluation setup. See the [official Cross-Encoder model table](https://sbert.net/docs/cross_encoder/pretrained_models.html).
 
-Model: https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2
+Model: https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2
 
 ## What a reranker does
 
@@ -45,7 +45,7 @@ See `requirements.txt`. The notebook installs ART and Transformers dependencies 
 
 ## References
 
-- [Hugging Face model card](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2)
+- [Hugging Face model card](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2)
 - [Sentence Transformers Cross-Encoder documentation](https://sbert.net/docs/cross_encoder/usage/usage.html)
 - [MS MARCO Cross-Encoder model comparison](https://sbert.net/docs/cross_encoder/pretrained_models.html)
 - [Official ART documentation](https://adversarial-robustness-toolbox.readthedocs.io/en/main/)
