@@ -1,0 +1,8 @@
+# Current MinerU Colab notebook dependencies
+adversarial-robustness-toolbox
+mineru[torch]>=4.0,<5
+transformers
+torch
+numpy
+Pillow
+safetensors
