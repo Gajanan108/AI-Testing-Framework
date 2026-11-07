@@ -44,7 +44,7 @@ Tool names are examples of possible implementation choices, not a claim that eve
 8. User acceptance and ethical review
 9. Continuous monitoring and improvement
 
-See [Framework overview](docs/FRAMEWORK_OVERVIEW.md) and [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md).
+See [Framework overview](docs/FRAMEWORK_OVERVIEW.md), [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md), and the [assessment flow diagram](docs/ASSESSMENT_FLOW.md).
 
 ## Continuous defensive assurance lifecycle
 
@@ -86,7 +86,7 @@ Both workstreams document attack applicability, execution status, and limitation
 | Confirmed finding | Reproducible evidence demonstrates security-relevant impact in the stated threat model |
 | False positive | The suspected issue was investigated and evidence does not support the finding |
 
-A model score change, class flip, prompt response, or metric deviation is not automatically a vulnerability. A finding should include reproducible evidence, the affected system boundary, attacker prerequisites, impact, severity rationale, and remediation guidance. See [Finding taxonomy](docs/FINDING_TAXONOMY.md) and the [finding report template](templates/FINDING_REPORT.md).
+A model score change, class flip, prompt response, or metric deviation is not automatically a vulnerability. A finding should include reproducible evidence, the affected system boundary, attacker prerequisites, impact, severity rationale, and remediation guidance. See [Finding taxonomy](docs/FINDING_TAXONOMY.md), the [finding report template](templates/FINDING_REPORT.md), and the [test case template](templates/TEST_CASE.md).
 
 ## Repository structure
 
@@ -99,10 +99,10 @@ Existing notebooks, reports, and workstream documentation are retained.
 
 ## Getting started
 
-1. Read the [Framework overview](docs/FRAMEWORK_OVERVIEW.md).
+1. Read the [Framework overview](docs/FRAMEWORK_OVERVIEW.md) and [assessment flow](docs/ASSESSMENT_FLOW.md).
 2. Define the system boundary, intended use, data flows, deployment context, and threat model.
 3. Select proportionate assessment activities using the [Assessment methodology](docs/ASSESSMENT_METHODOLOGY.md).
-4. Record scope and acceptance criteria with the [Assessment plan template](templates/ASSESSMENT_PLAN.md).
+4. Record scope and acceptance criteria with the [Assessment plan template](templates/ASSESSMENT_PLAN.md), then define individual checks using the [Test case template](templates/TEST_CASE.md).
 5. Execute only tests compatible with the model and interface. Record failures and non-applicable tests explicitly.
 6. Document observations using the [Finding report template](templates/FINDING_REPORT.md).
 7. Validate security impact before assigning confirmed status or severity.
