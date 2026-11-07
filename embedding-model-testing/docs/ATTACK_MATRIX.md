@@ -23,9 +23,9 @@ This matrix is a selection guide, not a promise that every attack applies to eve
 | SquareAttack | Score/query-based evasion; classifier scores | Executed | No top-class change in the sample run |
 | ZooAttack | Zeroth-order / query-based evasion; classifier score/loss contract | Executed | No top-class change in the sample run; recorded perturbation was zero |
 | NewtonFool | Gradient-based evasion; classifier gradients | Executed | Top-class changed; reported L-infinity perturbation was 1.0, so inspect budget and input normalization before interpreting |
-| SpatialTransformation | Spatial/image transformation | Failed before attack generation | Notebook passed unsupported `estimator` keyword; constructor must be aligned with installed ART API |
-| PixelAttack | Pixel-level image attack | Failed before attack generation | Notebook passed unsupported `estimator` keyword; constructor must be aligned with installed ART API |
-| ThresholdAttack | Threshold/image transformation | Failed before attack generation | Notebook passed unsupported `estimator` keyword; constructor must be aligned with installed ART API |
+| SpatialTransformation | Spatial/image transformation | Constructor corrected for ART 1.20.1; rerun pending | Official constructor expects `classifier`; image-space transformation only |
+| PixelAttack | Pixel-level image attack | Constructor corrected for ART 1.20.1; rerun pending | Official constructor expects `classifier`; `th` is the threshold parameter |
+| ThresholdAttack | Threshold/image transformation | Constructor corrected for ART 1.20.1; rerun pending | Official constructor expects `classifier` and `th`, not `estimator` and `threshold` |
 
 ## How to select attacks for embedding models
 
@@ -40,3 +40,10 @@ This matrix is a selection guide, not a promise that every attack applies to eve
 ## What this sample does not establish
 
 The MinerU notebook adapts PP-DocLayoutV2 object-query logits into per-class presence scores using max over queries. This is a classifier proxy over an image-input detector. It is not a direct vector-embedding evaluation and it does not cover OCR recognition, the GGUF VLM, bounding-box geometry, or the complete document-to-Markdown pipeline.
+
+
+## MiniLM reranker applicability update
+
+The MiniLM notebook selects FastGradientMethod, ProjectedGradientDescent, BasicIterativeMethod, NewtonFool and ZooAttack against its pairwise ranking proxy. SquareAttack is not applicable to the 2D token-embedding sequence representation: the official implementation uses spatial/image-shaped perturbation logic. Image-only attacks such as PixelAttack, ThresholdAttack and SpatialTransformation are also not applicable to this text model.
+
+The notebooks now pin ART 1.20.1. Constructor corrections are source-reviewed against the official release, but the updated notebooks have not yet been executed in Colab. The historical MinerU report (six executed, three failed) remains evidence for the earlier notebook revision only.
