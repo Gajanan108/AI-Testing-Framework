@@ -1,0 +1,11 @@
+__pycache__/
+.ipynb_checkpoints/
+.env
+*.log
+artifacts/
+models/
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
