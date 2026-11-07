@@ -82,7 +82,13 @@ The [embedding-model-testing workstream](embedding-model-testing/README.md) cont
 
 The [MiniLM reranker workstream](embedding-model-testing/reranker-minilm/README.md) evaluates cross-encoder/ms-marco-MiniLM-L6-v2 using a pairwise ranking proxy and selected official ART attacks. Its attack surface is continuous internal word-embedding space; this is not equivalent to an attacker changing natural-language text at an application endpoint.
 
-Both workstreams document attack applicability, execution status, and limitations. The reranker notebook and report template are committed, but the experiment has not yet been executed in Colab. A notebook or sample template is not completed test evidence.
+Both workstreams document attack applicability, execution status, and limitations. The reranker notebook and report template are committed, but the experiment has not yet been executed in Colab. Its attack selection excludes image-specific SquareAttack; ART is pinned to 1.20.1. The MinerU constructor fixes are source-reviewed against that release but await a fresh Colab run. A notebook or sample template is not completed test evidence.
+
+
+### Reproducibility and orchestration
+
+- [IBM ART benchmark protocol](docs/BENCHMARK_AND_REPRODUCIBILITY_PROTOCOL.md) — environment pinning, provenance, benchmark design, metrics and acceptance gates for the existing MinerU and MiniLM experiments.
+- [Assessment planning/orchestration MVP](orchestration/README.md) — model-archetype planning, a tool registry and an opt-in synthetic Presidio runner. ART notebooks remain Colab-driven; other external tools are not represented as integrated adapters.
 
 ## Results and finding quality
 
