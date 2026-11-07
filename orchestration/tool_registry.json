@@ -1,0 +1,205 @@
+{
+  "version": "1.0",
+  "description": "Evidence-aware planning registry. Only the Presidio synthetic-fixture reference runner is locally executable by the MVP; ART notebooks require Colab and other tools require upstream configuration.",
+  "tools": [
+    {
+      "id": "ibm_art_mineru_layout",
+      "name": "IBM ART — MinerU PP-DocLayoutV2",
+      "workstream": "adversarial_robustness",
+      "execution_mode": "colab_notebook",
+      "path": "embedding-model-testing/notebooks/mineru_ibm_art_layout_model_attacks.ipynb",
+      "applicable_archetypes": [
+        "document_vision_pipeline",
+        "image_classifier"
+      ],
+      "conditional_archetypes": [],
+      "limitations": "Layout-class presence proxy only; not OCR, boxes, VLM or end-to-end document pipeline."
+    },
+    {
+      "id": "ibm_art_minilm_reranker",
+      "name": "IBM ART — MiniLM reranker",
+      "workstream": "adversarial_robustness",
+      "execution_mode": "colab_notebook",
+      "path": "embedding-model-testing/reranker-minilm/notebooks/minilm_reranker_ibm_art_attacks.ipynb",
+      "applicable_archetypes": [
+        "embedding_reranker"
+      ],
+      "conditional_archetypes": [],
+      "limitations": "Continuous word-embedding pairwise ranking proxy; not discrete text perturbation."
+    },
+    {
+      "id": "presidio",
+      "name": "Microsoft Presidio",
+      "workstream": "privacy",
+      "execution_mode": "python_script",
+      "runner_id": "presidio_reference",
+      "path": "../AI-Testing-Tool-Samples/privacy/presidio/run_presidio.py",
+      "fixtures": "../AI-Testing-Tool-Samples/privacy/presidio/sample_cases.json",
+      "applicable_archetypes": [
+        "all"
+      ],
+      "conditional_archetypes": [],
+      "limitations": "Synthetic text fixtures only in the reference runner; not a complete privacy assessment."
+    },
+    {
+      "id": "aif360",
+      "name": "AI Fairness 360",
+      "workstream": "fairness",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/fairness/aif360/README.md",
+      "applicable_archetypes": [
+        "tabular_classifier",
+        "tabular_regressor",
+        "decisioning"
+      ],
+      "conditional_archetypes": [
+        "text_classifier",
+        "llm_application",
+        "rag_application"
+      ]
+    },
+    {
+      "id": "textattack",
+      "name": "TextAttack",
+      "workstream": "nlp_robustness",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/robustness/textattack/README.md",
+      "applicable_archetypes": [
+        "text_classifier"
+      ],
+      "conditional_archetypes": [
+        "embedding_reranker",
+        "llm_application",
+        "rag_application",
+        "agent_application"
+      ]
+    },
+    {
+      "id": "garak",
+      "name": "Garak",
+      "workstream": "llm_security",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/llm_security/garak/README.md",
+      "applicable_archetypes": [
+        "llm_application",
+        "rag_application",
+        "agent_application"
+      ],
+      "conditional_archetypes": [
+        "multimodal_model",
+        "document_vision_pipeline"
+      ]
+    },
+    {
+      "id": "lime",
+      "name": "LIME",
+      "workstream": "explainability",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/explainability/lime/README.md",
+      "applicable_archetypes": [
+        "tabular_classifier",
+        "tabular_regressor",
+        "text_classifier"
+      ],
+      "conditional_archetypes": [
+        "image_classifier",
+        "decisioning"
+      ]
+    },
+    {
+      "id": "interpretml",
+      "name": "InterpretML",
+      "workstream": "explainability",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/explainability/interpretml/README.md",
+      "applicable_archetypes": [
+        "tabular_classifier",
+        "tabular_regressor",
+        "decisioning"
+      ],
+      "conditional_archetypes": [
+        "text_classifier"
+      ]
+    },
+    {
+      "id": "jmeter",
+      "name": "Apache JMeter",
+      "workstream": "performance",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/performance/jmeter/README.md",
+      "applicable_archetypes": [
+        "all"
+      ],
+      "conditional_archetypes": []
+    },
+    {
+      "id": "locust",
+      "name": "Locust",
+      "workstream": "performance",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/performance/locust/README.md",
+      "applicable_archetypes": [
+        "all"
+      ],
+      "conditional_archetypes": []
+    },
+    {
+      "id": "evidently",
+      "name": "Evidently",
+      "workstream": "monitoring",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/monitoring/evidently/README.md",
+      "applicable_archetypes": [
+        "tabular_classifier",
+        "tabular_regressor",
+        "embedding_reranker",
+        "llm_application",
+        "rag_application"
+      ],
+      "conditional_archetypes": [
+        "document_vision_pipeline",
+        "multimodal_model"
+      ]
+    },
+    {
+      "id": "giskard",
+      "name": "Giskard",
+      "workstream": "ai_testing",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/monitoring/giskard/README.md",
+      "applicable_archetypes": [
+        "tabular_classifier",
+        "text_classifier",
+        "llm_application",
+        "rag_application",
+        "agent_application"
+      ],
+      "conditional_archetypes": [
+        "document_vision_pipeline",
+        "multimodal_model"
+      ]
+    },
+    {
+      "id": "splunk",
+      "name": "Splunk",
+      "workstream": "incident_response",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/incident_response/splunk/README.md",
+      "applicable_archetypes": [
+        "all"
+      ],
+      "conditional_archetypes": []
+    },
+    {
+      "id": "elastic_security",
+      "name": "Elastic Security",
+      "workstream": "incident_response",
+      "execution_mode": "documented_only",
+      "path": "../AI-Testing-Tool-Samples/incident_response/elastic/README.md",
+      "applicable_archetypes": [
+        "all"
+      ],
+      "conditional_archetypes": []
+    }
+  ]
+}

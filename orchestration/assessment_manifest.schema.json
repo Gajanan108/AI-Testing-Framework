@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI Security Assessment Manifest",
+  "type": "object",
+  "required": [
+    "assessment_id",
+    "target",
+    "authorisation",
+    "data_policy",
+    "selected_tools"
+  ],
+  "properties": {
+    "assessment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "object",
+      "required": [
+        "name",
+        "model_archetype",
+        "interface"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "model_archetype": {
+          "type": "string"
+        },
+        "interface": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "authorisation": {
+      "type": "object",
+      "required": [
+        "confirmed"
+      ],
+      "properties": {
+        "confirmed": {
+          "type": "boolean"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data_policy": {
+      "type": "object",
+      "required": [
+        "synthetic_data_only"
+      ],
+      "properties": {
+        "synthetic_data_only": {
+          "type": "boolean"
+        },
+        "secrets_source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "selected_tools": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_config": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

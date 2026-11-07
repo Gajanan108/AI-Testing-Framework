@@ -1,0 +1,33 @@
+{
+  "assessment_id": "DEMO-MINERU-001",
+  "target": {
+    "name": "MinerU PP-DocLayoutV2",
+    "version": "record-at-run-time",
+    "model_archetype": "document_vision_pipeline",
+    "interface": "local_model",
+    "environment": "Google Colab",
+    "components": [
+      "layout detector",
+      "OCR",
+      "VLM"
+    ]
+  },
+  "authorisation": {
+    "confirmed": false,
+    "owner": "replace-with-assessment-owner",
+    "scope": "Synthetic fixtures only; update only after written authorisation."
+  },
+  "data_policy": {
+    "synthetic_data_only": true,
+    "secrets_source": "environment variables or approved secrets manager"
+  },
+  "selected_tools": [
+    "ibm_art_mineru_layout",
+    "presidio"
+  ],
+  "tool_config": {
+    "presidio": {
+      "fixtures": "../AI-Testing-Tool-Samples/privacy/presidio/sample_cases.json"
+    }
+  }
+}
