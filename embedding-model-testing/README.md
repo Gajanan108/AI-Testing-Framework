@@ -85,3 +85,8 @@ Use only models, data, and endpoints you own or are explicitly authorized to tes
 - [ART classifier estimators](https://adversarial-robustness-toolbox.readthedocs.io/en/main/modules/estimators/classification.html)
 - [IBM Research: Adversarial Robustness Toolbox](https://research.ibm.com/projects/adversarial-robustness-toolbox)
 
+
+
+## MiniLM reranker experiment
+
+A second, separate workstream evaluates a compact text cross-encoder reranker using a pairwise ranking objective and official IBM ART attacks. See [reranker-minilm](reranker-minilm/README.md) for the model explanation, applicability matrix, Colab notebook, and report template.
