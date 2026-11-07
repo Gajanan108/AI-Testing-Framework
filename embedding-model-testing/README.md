@@ -26,7 +26,7 @@ ART attacks do not automatically understand an arbitrary embedding vector. An AR
 
 | Path | Purpose |
 |---|---|
-| `notebooks/mineru_ibm_art_layout_model_attacks.ipynb` | Uploaded Colab notebook, retained as supplied |
+| `notebooks/mineru_ibm_art_layout_model_attacks.ipynb` | Colab notebook with ART 1.20.1 pin and source-reviewed constructor corrections; rerun pending |
 | `reports/mineru_ibm_art_layout.html` | Uploaded sample HTML report |
 | `docs/ATTACK_MATRIX.md` | Attack-family selection and applicability notes |
 | `requirements.txt` | Python dependencies for the current notebook |
@@ -41,7 +41,7 @@ ART attacks do not automatically understand an arbitrary embedding vector. An AR
 
 **Historical run note:** the previously uploaded report records three constructor failures (SpatialTransformation, PixelAttack, ThresholdAttack) because that earlier notebook revision used incorrect constructor keywords. The current notebook pins ART 1.20.1 and corrects these to the official `classifier` argument; ThresholdAttack uses `th`. This is source-reviewed but not yet Colab-executed. The old report remains evidence for the old notebook revision only.
 
-## Current sample experiment
+## Historical sample experiment (earlier notebook revision)
 
 The attached report records:
 
