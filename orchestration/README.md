@@ -55,3 +55,7 @@ Finding status is independent. This MVP never promotes a tool result to a confir
 - AIF360, TextAttack, Garak, LIME, InterpretML, JMeter, Locust, Evidently, Giskard, Splunk and Elastic Security: documented upstream configuration; no local adapters claimed.
 
 Add adapters only when their input contract, authentication, invocation, timeout, output contract, failure handling and evidence provenance are documented. Do not accept arbitrary shell commands from manifests.
+
+## Automated validation
+
+The `.github/workflows/orchestration-validation.yml` workflow checks Python syntax, registry/manifest JSON, notebook JSON structure, planner unit tests and plan generation in plan-only mode. It does not run Colab notebooks or execute assessment tools.
