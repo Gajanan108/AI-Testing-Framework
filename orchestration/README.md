@@ -59,10 +59,31 @@ The schema defines the interchange contract; it does not execute tools, attest t
 1. Review the target and scope.
 2. Set `authorisation.confirmed` to true only after written authorisation.
 3. Keep `data_policy.synthetic_data_only` true.
-4. Install dependencies from the companion Presidio requirements file.
-5. Run the planner with `--execute-presidio`.
+4. Ensure the companion `AI-Testing-Tool-Samples` repository is checked out beside this repository so the registered relative runner and fixture paths resolve.
+5. Install dependencies from the companion Presidio requirements file and the NLP model required by your Presidio configuration.
+6. Run the planner with `--execute-presidio`.
 
-The adapter uses an argument list (not a shell command), a fixed registry entry and a bounded timeout. It invokes only the synthetic Presidio fixture script. It does not send data to an external endpoint.
+Example:
+
+```bash
+python orchestration/build_assessment_plan.py \
+  --manifest path/to/authorised-synthetic-manifest.json \
+  --output-dir ./assessment-output \
+  --execute-presidio
+```
+
+The adapter invokes only the fixed, registry-allowlisted Presidio script with an argument list (not a shell command) and a bounded 900-second timeout. It refuses execution when authorisation, synthetic-data policy or model-archetype applicability gates do not pass.
+
+The companion runner continues to write exactly two files in `assessment-output/presidio/`:
+
+- `presidio_report.html`
+- `presidio_run.log`
+
+With `--emit-evidence-summary`, the runner also emits one redacted `PRESIDIO_EVIDENCE_SUMMARY=` JSON line on stdout. This line contains fixture IDs, entity-type labels and confidence scores, but no raw fixture text or detected values. The orchestrator consumes it and writes `assessment-output/presidio_evidence.json`, including normalized test outcomes, unconfirmed candidate observations, execution metadata and SHA-256 hashes of the two runner artifacts. Raw stdout/stderr are not copied into the orchestration log.
+
+A missed expected entity is recorded as a failed test and an **UNCONFIRMED** candidate with severity **UNRATED**. An unexpected entity type is recorded as a possible false-positive candidate, also **UNCONFIRMED**. Neither is promoted to a confirmed vulnerability: this fixture-only run does not assess a production data flow or application-level impact. No OWASP mapping is assigned.
+
+If the runner fails, the orchestrator records a failed/partial execution and returns a non-zero exit code. A failure is not a security finding.
 
 ## Status semantics
 
