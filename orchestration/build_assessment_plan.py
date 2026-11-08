@@ -248,7 +248,10 @@ def run_presidio(
         return_code = result.returncode
         for line in result.stdout.splitlines():
             if line.startswith("PRESIDIO_EVIDENCE_SUMMARY="):
-                summary = json.loads(line.split("=", 1)[1])
+                try:
+                    summary = json.loads(line.split("=", 1)[1])
+                except json.JSONDecodeError:
+                    failure_note = "Runner emitted a malformed evidence summary."
                 break
         if result.returncode != 0:
             failure_note = f"Runner exited with code {result.returncode}."
@@ -280,6 +283,8 @@ def run_presidio(
     )
     if failure_note:
         record["notes"].append(failure_note)
+    if return_code != 0 or len(artifacts) != 2:
+        record["execution_status"] = "PARTIAL" if record["tests"] else "FAILED"
     evidence_path = out_dir / "presidio_evidence.json"
     evidence_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
 
@@ -290,6 +295,7 @@ def run_presidio(
         entry["execution_status"] = "FAILED"
         entry["reason"] = failure_note or "Runner did not produce both expected artifacts and a complete evidence summary."
         entry["exception"] = failure_note or f"exit_code={return_code}"
+    entry["finding_status"] = "UNCONFIRMED" if record["findings"] else "NONE"
     entry["evidence_record"] = str(evidence_path)
     entry["artifacts"] = artifacts
     plan["planning_only"] = False
