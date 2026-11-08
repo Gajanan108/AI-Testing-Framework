@@ -41,6 +41,16 @@ jobs:
           python -m json.tool orchestration/evidence_record.schema.json > /dev/null
           python -m json.tool orchestration/target_privacy_event.schema.json > /dev/null
           python -m json.tool orchestration/examples/mineru_assessment.example.json > /dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sample = Path('orchestration/examples/target_privacy_events.synthetic.jsonl')
+          for line_number, line in enumerate(sample.read_text().splitlines(), 1):
+              event = json.loads(line)
+              assert event['event_type'] in {'prompt_input', 'model_output', 'retrieved_document'}
+              assert event['text'].startswith('Synthetic') or '[REDACTED]' in event['text']
+          print('Synthetic privacy event sample is valid JSONL.')
+          PY
       - name: Validate notebook JSON structure
         run: |
           python - <<'PY'
