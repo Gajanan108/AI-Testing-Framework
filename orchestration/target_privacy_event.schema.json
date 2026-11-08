@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Instrumented LLM/RAG Privacy Event",
+  "description": "Caller-emitted event contract. Do not include raw events in persistent evidence artifacts.",
+  "type": "object",
+  "required": ["event_id", "event_type", "text", "destination_trust", "egress_allowed", "redaction_applied"],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {"enum": ["prompt_input", "model_output", "retrieved_document"]},
+    "text": {"type": "string"},
+    "destination_trust": {"enum": ["internal", "trusted", "external", "untrusted"]},
+    "egress_allowed": {"type": "boolean"},
+    "redaction_applied": {"type": "boolean"},
+    "allowed_entity_types": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "trace_id": {"type": ["string", "null"]},
+    "component": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
