@@ -55,3 +55,8 @@ The notebook is committed with the ART version pin and attack applicability corr
 - [MS MARCO Cross-Encoder model comparison](https://sbert.net/docs/cross_encoder/pretrained_models.html)
 - [Official ART documentation](https://adversarial-robustness-toolbox.readthedocs.io/en/main/)
 - [ART evasion attack API](https://adversarial-robustness-toolbox.readthedocs.io/en/main/modules/attacks/evasion.html)
+
+
+## Sample HTML report
+
+A static [MiniLM illustrative HTML report](reports/minilm_reranker_sample.html) demonstrates the intended output format. It is explicitly labelled **ILLUSTRATIVE SAMPLE — NOT AN EXECUTED ASSESSMENT**: attack statuses are NOT RUN, metrics are unmeasured, and no findings or OWASP mappings are claimed. The [model robustness report index](../../reports/INDEX.html) links it with the historical MinerU report.
