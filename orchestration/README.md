@@ -92,7 +92,7 @@ The recorder passes raw text to the detector synchronously but does not retain i
 
 ## Run the target privacy pipeline
 
-The input is newline-delimited JSON (one event object per line) conforming to `target_privacy_event.schema.json`. Keep the input synthetic for this reference runner.
+The input is newline-delimited JSON (one event object per line) conforming to `target_privacy_event.schema.json`. A synthetic three-event example is included at `orchestration/examples/target_privacy_events.synthetic.jsonl`.
 
 Install dependencies and the Presidio language model configured for your environment:
 
@@ -105,7 +105,7 @@ Run only after confirming written authorization and using synthetic fixtures:
 
 ```bash
 python orchestration/run_target_privacy.py \
-  --events path/to/synthetic-events.jsonl \
+  --events orchestration/examples/target_privacy_events.synthetic.jsonl \
   --output-dir ./target-privacy-output \
   --assessment-id demo-privacy-001 \
   --target-name "Synthetic RAG application" \
