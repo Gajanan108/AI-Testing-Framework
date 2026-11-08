@@ -95,3 +95,6 @@ A second, separate workstream evaluates a compact text cross-encoder reranker us
 ## HTML report showcase
 
 Open the [model robustness report index](reports/INDEX.html) for the HTML examples. It links the historical MinerU execution report and the illustrative MiniLM report. The MiniLM report is explicitly marked NOT EXECUTED and contains no measured results or findings. See [reports/README.md](reports/README.md) for the evidence-status distinction.
+
+
+A separate [MinerU illustrative report sample](reports/mineru_ibm_art_layout_sample.html) demonstrates the corrected notebook's intended report structure. It is clearly marked NOT EXECUTED and does not replace the historical report.
