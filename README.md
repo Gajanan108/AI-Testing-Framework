@@ -141,3 +141,8 @@ Contributions that improve test coverage, model adapters, reproducibility, docum
 ## Licence
 
 The repository has historically described the project as MIT-licensed. A licence file is not currently present at the repository root; add the actual licence text before treating the repository as formally licensed under MIT.
+
+
+## OWASP mapping guidance
+
+The [OWASP mapping guide](docs/OWASP_MAPPING_GUIDE.md) provides evidence-led candidate mappings for the framework's seven assurance areas and common model archetypes. It uses the OWASP GenAI LLM Top 10 2026 release and clearly labels the OWASP Machine Learning Security Top 10 2023 project as draft. A mapping is not a finding verdict, severity rating, or compliance claim.
