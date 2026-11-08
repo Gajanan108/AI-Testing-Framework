@@ -21,21 +21,22 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Compile orchestration module
-        run: python -m py_compile orchestration/build_assessment_plan.py
-
+      - name: Install evidence schema validator
+        run: python -m pip install "jsonschema>=4.20,<5"
+      - name: Compile orchestration modules
+        run: |
+          python -m py_compile orchestration/build_assessment_plan.py
+          python -m py_compile orchestration/validate_evidence.py
       - name: Validate JSON documents
         run: |
           python -m json.tool orchestration/tool_registry.json > /dev/null
           python -m json.tool orchestration/assessment_manifest.schema.json > /dev/null
+          python -m json.tool orchestration/evidence_record.schema.json > /dev/null
           python -m json.tool orchestration/examples/mineru_assessment.example.json > /dev/null
-
       - name: Validate notebook JSON structure
         run: |
           python - <<'PY'
@@ -51,15 +52,11 @@ jobs:
               assert notebook.get("cells"), path
               print(f"Notebook JSON valid: {path}")
           PY
-
-      - name: Run planner unit tests
+      - name: Run orchestration unit tests
         run: python -m unittest discover -s orchestration/tests -v
-
       - name: Build a plan without executing tools
         run: |
-          python orchestration/build_assessment_plan.py \
-            --manifest orchestration/examples/mineru_assessment.example.json \
-            --output-dir /tmp/assessment-plan
+          python orchestration/build_assessment_plan.py             --manifest orchestration/examples/mineru_assessment.example.json             --output-dir /tmp/assessment-plan
           python - <<'PY'
           import json
           from pathlib import Path
