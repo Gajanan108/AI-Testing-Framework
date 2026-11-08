@@ -81,7 +81,7 @@ The companion runner continues to write exactly two files in `assessment-output/
 
 With `--emit-evidence-summary`, the runner also emits one redacted `PRESIDIO_EVIDENCE_SUMMARY=` JSON line on stdout. This line contains fixture IDs, entity-type labels and confidence scores, but no raw fixture text or detected values. The orchestrator consumes it and writes `assessment-output/presidio_evidence.json`, including normalized test outcomes, unconfirmed candidate observations, execution metadata and SHA-256 hashes of the two runner artifacts. Raw stdout/stderr are not copied into the orchestration log.
 
-A missed expected entity is recorded as a failed test and an **UNCONFIRMED** candidate with severity **UNRATED**. An unexpected entity type is recorded as a possible false-positive candidate, also **UNCONFIRMED**. Neither is promoted to a confirmed vulnerability: this fixture-only run does not assess a production data flow or application-level impact. No OWASP mapping is assigned.
+A missed expected entity is recorded as a failed test and an **UNCONFIRMED** candidate with severity **UNRATED**. An unexpected entity type is recorded as a possible false-positive candidate, also **UNCONFIRMED**. Neither is promoted to a confirmed vulnerability: this fixture-only runner evaluates Presidio against the fixture set and is not wired to the target model or application data flow. It does not assess production exposure or application-level impact. No OWASP mapping is assigned.
 
 If the runner fails, the orchestrator records a failed/partial execution and returns a non-zero exit code. A failure is not a security finding.
 
