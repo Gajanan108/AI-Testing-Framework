@@ -132,7 +132,7 @@ def build_presidio_evidence(
             },
             "evidence_refs": artifact_refs,
         })
-        if missed:
+        if missed and artifact_refs:
             findings.append({
                 "finding_id": f"{item['test_id']}-missed-entity-type",
                 "title": "Expected PII entity type not detected",
@@ -147,7 +147,7 @@ def build_presidio_evidence(
                 ),
                 "evidence_refs": artifact_refs,
             })
-        if unexpected:
+        if unexpected and artifact_refs:
             findings.append({
                 "finding_id": f"{item['test_id']}-unexpected-entity-type",
                 "title": "Unexpected PII entity type detected",
