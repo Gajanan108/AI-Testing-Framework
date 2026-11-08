@@ -1,6 +1,6 @@
 """Privacy assessment for explicitly instrumented LLM/RAG data-flow events.
 
-The caller supplies an entity detector (for example, Presidio AnalyzerEngine).
+The caller supplies an entity detector (for example, a configured Presidio analyzer).
 Raw event text is passed to that detector in memory and is never copied to results.
 """
 from __future__ import annotations
@@ -43,9 +43,8 @@ def assess_events(
 ) -> dict[str, Any]:
     """Inspect events and return redacted observations plus unconfirmed policy signals.
 
-    A signal is emitted only when a detector identifies an entity type that is not
-    allowed, the event is permitted to egress to an external/untrusted destination,
-    and redaction has not been applied. This is a candidate, not a confirmed finding.
+    A signal is emitted when disallowed entity types are detected on content marked
+    for egress to an external/untrusted destination without redaction.
     """
     tests: list[dict[str, Any]] = []
     findings: list[dict[str, Any]] = []
@@ -71,7 +70,6 @@ def assess_events(
             and event["egress_allowed"]
             and event["destination_trust"] in {"external", "untrusted"}
             and not event["redaction_applied"]
-            and event["event_type"] in {"model_output", "retrieved_document"}
         )
         tests.append({
             "test_id": event_id,
@@ -102,7 +100,7 @@ def assess_events(
                 "finding_verdict": "UNCONFIRMED",
                 "description": (
                     "A detector identified entity types outside the event policy on an "
-                    "unredacted output/retrieval path marked for an external or untrusted "
+                    "unredacted data-flow event marked for an external or untrusted "
                     "destination. Validate detector accuracy, policy intent and actual "
                     "delivery before confirming impact."
                 ),
@@ -110,7 +108,7 @@ def assess_events(
 
     return {
         "adapter": "target_event_privacy",
-        "adapter_version": "0.1.0",
+        "adapter_version": "0.2.0",
         "event_count": len(tests),
         "tests": tests,
         "findings": findings,
@@ -122,3 +120,54 @@ def assess_events(
             "No OWASP mapping or severity is assigned automatically.",
         ],
     }
+
+
+class PrivacyEventRecorder:
+    """Incrementally assess events and retain only redacted results.
+
+    Call record_event at each application boundary. The raw event text is passed
+    to assess_events synchronously and is not retained by this recorder.
+    """
+
+    def __init__(
+        self,
+        detect_entities: Callable[[str], Iterable[Mapping[str, Any]]],
+        result_sink: Callable[[dict[str, Any]], None] | None = None,
+    ) -> None:
+        self._detect_entities = detect_entities
+        self._result_sink = result_sink
+        self._seen_ids: set[str] = set()
+        self._tests: list[dict[str, Any]] = []
+        self._findings: list[dict[str, Any]] = []
+
+    def record_event(self, event: Mapping[str, Any]) -> dict[str, Any]:
+        validate_event(event)
+        event_id = event["event_id"]
+        if event_id in self._seen_ids:
+            raise EventContractError(f"Duplicate event_id: {event_id}")
+        # assess_events validates again and ensures exactly the same policy path is used.
+        assessed = assess_events([event], self._detect_entities)
+        self._seen_ids.add(event_id)
+        self._tests.extend(assessed["tests"])
+        self._findings.extend(assessed["findings"])
+        if self._result_sink is not None:
+            # Only normalized/redacted data is passed to the caller's persistence hook.
+            self._result_sink(assessed)
+        return assessed
+
+    def result(self) -> dict[str, Any]:
+        """Return the accumulated redacted result; raw event text is not retained."""
+        return {
+            "adapter": "target_event_privacy",
+            "adapter_version": "0.2.0",
+            "event_count": len(self._tests),
+            "tests": list(self._tests),
+            "findings": list(self._findings),
+            "limitations": [
+                "The caller is responsible for instrumenting the real application data path and supplying complete, truthful policy metadata.",
+                "The detector receives raw text in memory; this recorder does not retain it, but caller-side logging may do so.",
+                "Entity-type detection is not proof that a value is valid, secret, or attributable to a person.",
+                "A signal remains UNCONFIRMED until delivery, authorization, business context and impact are reviewed.",
+                "No OWASP mapping or severity is assigned automatically.",
+            ],
+        }
