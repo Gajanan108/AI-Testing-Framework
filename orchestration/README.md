@@ -12,6 +12,8 @@ This is **not** a unified scanner, automatic attack selector for every tool, or 
 
 - `tool_registry.json`: tool IDs, workstreams, applicability, execution modes and references.
 - `assessment_manifest.schema.json`: JSON Schema for assessment inputs.
+- `evidence_record.schema.json`: normalized contract for completed tool runs, tests, findings and evidence artifacts.
+- `validate_evidence.py`: validates an evidence JSON file against that contract.
 - `examples/mineru_assessment.example.json`: sample manifest; authorisation is deliberately false.
 - `build_assessment_plan.py`: standard-library planner with an opt-in Presidio runner.
 
@@ -24,6 +26,33 @@ python orchestration/build_assessment_plan.py --manifest orchestration/examples/
 ```
 
 Produces JSON plan, Markdown plan and orchestration log. It does not execute tests.
+
+## Evidence record validation
+
+Install the validator dependency:
+
+```bash
+python -m pip install "jsonschema>=4.20,<5"
+```
+
+Validate a tool-produced record:
+
+```bash
+python orchestration/validate_evidence.py path/to/evidence-record.json
+```
+
+The schema requires run identity, target, timestamps, execution status, test outcomes and artifact hashes. Finding verdicts are independent from test outcomes:
+
+| Field | Meaning |
+|---|---|
+| Test status `PASS` / `FAIL` / `ERROR` | Outcome of an individual test case |
+| Finding verdict `CONFIRMED_TRUE` | Evidence and review support a true finding |
+| Finding verdict `CONFIRMED_FALSE` | Review determined the suspected issue is a false positive |
+| Finding verdict `UNCONFIRMED` | Signal requires further validation |
+
+A failed test is not automatically a confirmed vulnerability. A risky-behaviour flag records the observed risk characteristic; it does not replace severity or finding validation. Evidence artifacts require SHA-256 hashes so downstream reports can identify the exact collected files.
+
+The schema defines the interchange contract; it does not execute tools, attest that a tool ran, or independently validate the truth of a finding.
 
 ## Optional Presidio execution
 
@@ -58,4 +87,4 @@ Add adapters only when their input contract, authentication, invocation, timeout
 
 ## Automated validation
 
-The `.github/workflows/orchestration-validation.yml` workflow checks Python syntax, registry/manifest JSON, notebook JSON structure, planner unit tests and plan generation in plan-only mode. It does not run Colab notebooks or execute assessment tools.
+The `.github/workflows/orchestration-validation.yml` workflow checks Python syntax, registry/manifest JSON, notebook JSON structure, planner and evidence-schema unit tests, evidence schema JSON validity and plan generation in plan-only mode. It does not run Colab notebooks or execute assessment tools.
