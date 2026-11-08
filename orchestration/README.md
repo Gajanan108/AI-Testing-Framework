@@ -6,6 +6,8 @@ A small evidence-aware planning/orchestration layer. It reads an assessment mani
 
 The MVP has one allowlisted local reference runner: Microsoft Presidio against synthetic fixtures. It can optionally invoke that runner. IBM ART experiments remain Google Colab notebooks and are marked `MANUAL_COLAB`; other external tools require user configuration and are not falsely represented as executable adapters.
 
+The target privacy event adapter is a reusable in-process library for applications that explicitly instrument LLM/RAG prompt, response and retrieval events. It accepts a detector callback (for example, a configured Presidio analyzer), evaluates policy metadata and returns redacted observations. It does not connect to an application, endpoint, model, or telemetry platform by itself.
+
 This is **not** a unified scanner, automatic attack selector for every tool, or claim that all catalogue tools are integrated.
 
 ## Files
@@ -13,9 +15,30 @@ This is **not** a unified scanner, automatic attack selector for every tool, or 
 - `tool_registry.json`: tool IDs, workstreams, applicability, execution modes and references.
 - `assessment_manifest.schema.json`: JSON Schema for assessment inputs.
 - `evidence_record.schema.json`: normalized contract for completed tool runs, tests, findings and evidence artifacts.
-- `validate_evidence.py`: validates an evidence JSON file against that contract.
+- `target_privacy_event.schema.json`: event contract for caller-instrumented LLM/RAG data flows.
+- `target_privacy_adapter.py`: validates and assesses instrumented privacy events without persisting raw text.
+- `validate_evidence.py`: validates an evidence JSON file against the evidence contract.
 - `examples/mineru_assessment.example.json`: sample manifest; authorisation is deliberately false.
 - `build_assessment_plan.py`: standard-library planner with an opt-in Presidio runner.
+
+## Target-interface privacy event adapter
+
+The caller must instrument the actual application at the points where prompts enter the model, model outputs leave it, and retrieved documents enter the generation context. Emit one event per observation using `target_privacy_event.schema.json`. Required policy metadata includes destination trust, whether egress is allowed, whether redaction was applied, and optionally allowed entity types.
+
+Example integration (the detector is supplied by the application):
+
+```python
+from orchestration.target_privacy_adapter import assess_events
+
+# detector(text) should return iterable mappings such as
+# {"entity_type": "EMAIL_ADDRESS", "score": 0.98}.
+# Configure and initialize your actual detector in the application.
+result = assess_events(instrumented_events, detect_entities=detector)
+```
+
+Event types are `prompt_input`, `model_output` and `retrieved_document`. The adapter only emits a risky-behaviour candidate when it observes a disallowed entity type on an unredacted model-output/retrieval event that is marked for egress to an external or untrusted destination. The candidate remains `UNCONFIRMED` and `UNRATED`; the adapter does not infer an OWASP mapping. A passing result means only that this rule did not fire for the supplied events, not that the application is privacy-safe.
+
+The detector receives event text in memory. The adapter excludes raw text and detected values from its returned observations, but the caller must also prevent its own instrumentation, detector, tracing and application logs from retaining sensitive content. Use synthetic data by default and run against real data only under documented authorization and an approved data-handling policy. This adapter does not itself enforce authorization, connect to the target, verify completeness of instrumentation, or write a full evidence record with artifact hashes.
 
 ## Plan only (default)
 
@@ -93,7 +116,7 @@ If the runner fails, the orchestrator records a failed/partial execution and ret
 | REVIEW_REQUIRED | Conditional fit; verify component/interface |
 | MANUAL_COLAB | Open and run the referenced notebook in Colab |
 | READY_LOCAL | An allowlisted local runner exists; execution remains opt-in |
-| UPSTREAM_CONFIGURATION_REQUIRED | Documentation exists; configure and run upstream tool |
+| UPSTREAM_CONFIGURATION_REQUIRED | Documentation exists; configure and run the upstream tool |
 | EXECUTED / FAILED | Allowlisted runner completed or failed |
 
 Finding status is independent. This MVP never promotes a tool result to a confirmed finding.
@@ -101,6 +124,7 @@ Finding status is independent. This MVP never promotes a tool result to a confir
 ## Current integration coverage
 
 - Presidio: optional local synthetic-fixture runner.
+- Target privacy event adapter: in-process event assessment library; caller instrumentation and detector wiring required.
 - IBM ART MinerU and MiniLM: Colab notebook references; manual execution.
 - AIF360, TextAttack, Garak, LIME, InterpretML, JMeter, Locust, Evidently, Giskard, Splunk and Elastic Security: documented upstream configuration; no local adapters claimed.
 
