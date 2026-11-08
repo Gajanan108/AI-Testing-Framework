@@ -191,6 +191,7 @@ def build_presidio_evidence(
         "artifacts": artifacts,
         "limitations": [
             "Synthetic fixtures only; no production or personal data was processed.",
+            "The reference runner evaluates Presidio against fixtures; it is not wired to the target model or application data flow.",
             "Entity-type comparison only; this is not a span-level precision/recall benchmark.",
             "A detector miss or unexpected entity type is not automatically a confirmed security finding.",
             "No application-level data flow, exposure, impact, severity or OWASP mapping was established.",
