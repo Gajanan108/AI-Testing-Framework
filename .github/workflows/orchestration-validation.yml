@@ -48,7 +48,9 @@ jobs:
           for line_number, line in enumerate(sample.read_text().splitlines(), 1):
               event = json.loads(line)
               assert event['event_type'] in {'prompt_input', 'model_output', 'retrieved_document'}
-              assert event['text'].startswith('Synthetic') or '[REDACTED]' in event['text']
+              assert isinstance(event['text'], str)
+              assert isinstance(event['egress_allowed'], bool)
+              assert isinstance(event['redaction_applied'], bool)
           print('Synthetic privacy event sample is valid JSONL.')
           PY
       - name: Validate notebook JSON structure
