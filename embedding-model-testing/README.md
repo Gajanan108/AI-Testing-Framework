@@ -90,3 +90,8 @@ Use only models, data, and endpoints you own or are explicitly authorized to tes
 ## MiniLM reranker experiment
 
 A second, separate workstream evaluates a compact text cross-encoder reranker using a pairwise ranking objective and official IBM ART attacks. See [reranker-minilm](reranker-minilm/README.md) for the model explanation, applicability matrix, Colab notebook, and report template.
+
+
+## HTML report showcase
+
+Open the [model robustness report index](reports/INDEX.html) for the HTML examples. It links the historical MinerU execution report and the illustrative MiniLM report. The MiniLM report is explicitly marked NOT EXECUTED and contains no measured results or findings. See [reports/README.md](reports/README.md) for the evidence-status distinction.
