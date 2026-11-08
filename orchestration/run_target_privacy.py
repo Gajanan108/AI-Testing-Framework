@@ -99,7 +99,7 @@ def main() -> int:
             raise RuntimeError("Generated evidence record failed schema validation: " + "; ".join(errors))
     except Exception as exc:
         # Error messages are restricted to exception type; input content is never logged.
-        print(f"Assessment failed: {type(exc).__name__}: {exc}", file=sys.stderr)
+        print(f"Assessment failed: {type(exc).__name__}. No event content was logged.", file=sys.stderr)
         return 1
 
     print(f"Assessment complete: {result['event_count']} events; {len(result['findings'])} unconfirmed candidate findings.")
