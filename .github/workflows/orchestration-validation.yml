@@ -31,11 +31,13 @@ jobs:
         run: |
           python -m py_compile orchestration/build_assessment_plan.py
           python -m py_compile orchestration/validate_evidence.py
+          python -m py_compile orchestration/target_privacy_adapter.py
       - name: Validate JSON documents
         run: |
           python -m json.tool orchestration/tool_registry.json > /dev/null
           python -m json.tool orchestration/assessment_manifest.schema.json > /dev/null
           python -m json.tool orchestration/evidence_record.schema.json > /dev/null
+          python -m json.tool orchestration/target_privacy_event.schema.json > /dev/null
           python -m json.tool orchestration/examples/mineru_assessment.example.json > /dev/null
       - name: Validate notebook JSON structure
         run: |
@@ -56,7 +58,7 @@ jobs:
         run: python -m unittest discover -s orchestration/tests -v
       - name: Build a plan without executing tools
         run: |
-          python orchestration/build_assessment_plan.py             --manifest orchestration/examples/mineru_assessment.example.json             --output-dir /tmp/assessment-plan
+          python orchestration/build_assessment_plan.py --manifest orchestration/examples/mineru_assessment.example.json --output-dir /tmp/assessment-plan
           python - <<'PY'
           import json
           from pathlib import Path
