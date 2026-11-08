@@ -32,6 +32,8 @@ jobs:
           python -m py_compile orchestration/build_assessment_plan.py
           python -m py_compile orchestration/validate_evidence.py
           python -m py_compile orchestration/target_privacy_adapter.py
+          python -m py_compile orchestration/target_privacy_pipeline.py
+          python -m py_compile orchestration/run_target_privacy.py
       - name: Validate JSON documents
         run: |
           python -m json.tool orchestration/tool_registry.json > /dev/null
